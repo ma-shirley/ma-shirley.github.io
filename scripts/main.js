@@ -121,7 +121,9 @@ function handleKeyPress(e) {
   if (e.keyCode >= 49 && e.keyCode <= 57) {
     addLetter(e);
   } else if (e.key === "Enter") {
-    renderResult();
+    if (currentCharIdx == 4) {
+      renderResult();
+    }
   } else if (e.key === "Backspace") {
     removeLetter();
   }
