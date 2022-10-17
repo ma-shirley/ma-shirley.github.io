@@ -1,0 +1,12 @@
+# Setup
+title:               blog
+tagline:             ''
+
+# Gems
+plugins:
+  - jekyll-paginate
+
+markdown: kramdown
+kramdown:
+    math_engine: katex
+theme: minima
