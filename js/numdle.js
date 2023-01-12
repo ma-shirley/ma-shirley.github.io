@@ -132,7 +132,7 @@ function resetAll(num = 1111) {
     num = Math.floor(Math.random() * 9876 + 1);
   }
   NUM_ANSWER = num.toString();
-  console.log("HINT: the correct answer is: ", NUM_ANSWER);
+  // console.log("HINT: the correct answer is: ", NUM_ANSWER);
   charArray = ["", "", "", ""];
   currentCharIdx = 0;
   guessCount = 0;
