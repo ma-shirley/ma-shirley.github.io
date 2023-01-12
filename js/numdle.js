@@ -18,11 +18,10 @@ function validAnswer(num) {
 }
 
 while (!validAnswer(num)) {
-  num = Math.floor(Math.random() * 9876 + 1)
+  num = Math.floor(Math.random() * 9876 + 1);
 }
 
-const NUM_ANSWER = num.toString();
-console.log("HINT: the correct answer is: ", NUM_ANSWER);
+let NUM_ANSWER = num.toString();
 
 const WordEnum = {
   CORRECT: 1,
@@ -35,6 +34,7 @@ const { CORRECT, ALMOST, INCORRECT } = WordEnum;
 
 const collection = document.querySelectorAll("#collection-row");
 const messege = document.querySelector(".messege");
+const popup = document.querySelector(".popup");
 const virtualKeyboard = document.querySelector(".virtual-keyboard");
 const correctbox = document.getElementsByClassName("correctbox");
 const almostbox = document.getElementsByClassName("almostbox");
@@ -95,14 +95,14 @@ function renderResult(e) {
     if (guessCount == 0) {
       messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
       You won with just 1 attempt!  <br/>
-      <button  onclick=location.reload() class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
+      <button  onclick="resetAll()" class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
       </p>`;
       currentCharIdx = 0; 
     }
     else {
     messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
                 You won with ${guessCount+1} attempts! <br/>
-                <button  onclick=location.reload() class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
+                <button  onclick="resetAll()" class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
                 </p>`;
     currentCharIdx = 0;
     }
@@ -115,17 +115,36 @@ function renderResult(e) {
   correctbox[guessCount].innerHTML = result[0];
   almostbox[guessCount].innerHTML = result[1];
   guessCount != 9 ? guessCount++ : null;
-  console.log(guessCount);
   currentCharIdx = 0;
 
   if (guessCount == 9) {
     messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
                 You lost :( <br/>
                 <span class="text-white">The secret number is: <b>${num}</b><span/><br/>
-                <button onclick=location.reload() class='restar  bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
+                <button onclick="resetAll()" class='restar  bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
                 </p>`;
   }
 }
+}
+
+function resetAll(num = 1111) {
+  while (!validAnswer(num)) {
+    num = Math.floor(Math.random() * 9876 + 1);
+  }
+  NUM_ANSWER = num.toString();
+  console.log("HINT: the correct answer is: ", NUM_ANSWER);
+  charArray = ["", "", "", ""];
+  currentCharIdx = 0;
+  guessCount = 0;
+  for (let i = 0; i < 9; i++) {
+    correctbox[i].innerHTML = "?";
+    almostbox[i].innerHTML = "?";
+    for (let j = 0; j < 4; j++) {
+      collection[0].children[i].children[j].innerText = "";
+    }
+  }
+  messege.innerHTML = "";
+  
 }
 
 // Event handlers
@@ -141,10 +160,11 @@ function handleKeyPress(e) {
     removeLetter();
   }
   else if (e.key == "Restart") {
-    charArray = ["", "", "", ""];
-    currentCharIdx = 0;
-    guessCount = 0;
-    location.reload();
+    // charArray = ["", "", "", ""];
+    // currentCharIdx = 0;
+    // guessCount = 0;
+    // location.reload();
+    resetAll(num=NUM_ANSWER);
   }
 }
 
@@ -177,7 +197,6 @@ function virtualToKeyCode(e) {
 window.addEventListener("keydown", (e) => {
   handleKeyPress(e);
 });
-
 // Virtual: first row
 virtualKeyboard.children[0].addEventListener("click", (e) => {
   handleKeyPress(virtualToKeyCode(e));
@@ -186,3 +205,29 @@ virtualKeyboard.children[0].addEventListener("click", (e) => {
 virtualKeyboard.children[1].addEventListener("click", (e) => {
   handleKeyPress(virtualToKeyCode(e));
 });
+
+window.addEventListener("load", function(){
+  displayPopup();
+});
+
+function displayPopup(e) {
+
+  messege.innerHTML = `
+      <p class="bg-white border border-green-600 w-80 rounded text-black absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-left messeges p-5 shadow">
+      <b>How To Play</b>  <br/>
+      Guess the number in 9 tries <br/>
+      Answers have distinct digits in 1-9 <br/>
+      &#10003 number &#10003 location => green <br/>
+      &#10003 number &#x2715 location => yellow <br/>
+      <br/>
+      <b>Example</b> <br/>
+      The number is 1234 <br/>
+      <img src="img/numdle3.png">
+      4 is in the number but in the wrong place <br/>
+      <img src="img/numdle1.png">
+      1 is in the right place <br/> 
+      <img src="img/numdle2.png">
+      Also, the guess doesn't have to have distinct digits <br/>
+      <button  onclick="resetAll()" class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer play-button'>Let's play!</button>
+      </p>`;
+}
