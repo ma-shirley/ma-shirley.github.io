@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdn.tailwindcss.com/3.0.23"></script>
+    <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -115,12 +116,18 @@
                     <li class="bg-gray-300 py-2 px-2 m-0.5 rounded w-7 cursor-pointer">9</li>
                 </ul>
                 <ul class="flex flex-row font-bold text-xs text-center justify-center self-center">
-                    <li id="enter" class="bg-gray-300 py-2 px-2 m-0.5 rounded w-16 cursor-pointer">ENTER</li>
-                    <li id="delete" class="bg-gray-300 py-2 px-2 m-0.5 rounded w-16 cursor-pointer">DELETE</li>
+                    <li id="forget" class="bg-gray-300 py-2 px-2 m-0.5 rounded w-18 cursor-pointer">FORGET ME</li>
                     <li id="restart" class="bg-gray-300 py-2 px-2 m-0.5 rounded w-18 cursor-pointer">RESTART</li>
+                    <li id="delete" class="bg-gray-300 py-2 px-2 m-0.5 rounded w-16 cursor-pointer">DELETE</li>
+                    <li id="enter" class="bg-gray-300 py-2 px-2 m-0.5 rounded w-16 cursor-pointer">ENTER</li>
+
                 </ul>
             </div>
         </div>
+        <div class="container-full md:w-2/5 mx-auto" style="margin-top: 6em;align-content: center;">
+            <h4 class="text-center">Current Statistics</h4>
+        </div>
+        <div id="chartDiv" style="width:20em; height:20em; margin:0 auto;"> </div>
 </body>
 <script src="./js/numdle.js"></script>
 

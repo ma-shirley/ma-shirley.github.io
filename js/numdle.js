@@ -43,7 +43,7 @@ const almostbox = document.getElementsByClassName("almostbox");
 let charArray = ["", "", "", ""];
 let currentCharIdx = 0;
 let guessCount = 0;
-
+let showing_popup = false;
 
 function checkNumber(guess, answer) {
   const ans = answer;
@@ -81,9 +81,9 @@ function addLetter(data) {
 
 function removeLetter() {
   if (currentCharIdx > 0) {
-    collection[0].children[guessCount].children[currentCharIdx-1].innerText = "";
-    collection[0].children[guessCount].children[currentCharIdx-1].classList.remove("new-border");
-    charArray[currentCharIdx-1] = "";
+    collection[0].children[guessCount].children[currentCharIdx - 1].innerText = "";
+    collection[0].children[guessCount].children[currentCharIdx - 1].classList.remove("new-border");
+    charArray[currentCharIdx - 1] = "";
     currentCharIdx != 0 ? currentCharIdx-- : (currentCharIdx = 0);
   }
 }
@@ -92,39 +92,46 @@ function renderResult(e) {
   const guess = charArray.join("");
   // Check if it is correct
   if (guess == NUM_ANSWER) {
+    storage_key = (guessCount + 1).toString();
+    cnt = parseInt(localStorage.getItem(storage_key));
+    localStorage.setItem(storage_key, (cnt + 1).toString());
+    // console.log(storage_key, cnt + 1);
     if (guessCount == 0) {
       messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
       You won with just 1 attempt!  <br/>
-      <button  onclick="resetAll()" class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
+      <button  onclick=location.reload() class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
       </p>`;
-      currentCharIdx = 0; 
+      currentCharIdx = 0;
     }
     else {
-    messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
-                You won with ${guessCount+1} attempts! <br/>
-                <button  onclick="resetAll()" class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
+      messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
+                You won with ${guessCount + 1} attempts! <br/>
+                <button  onclick=location.reload() class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
                 </p>`;
-    currentCharIdx = 0;
+      currentCharIdx = 0;
     }
     const result = checkNumber(guess, NUM_ANSWER);
     correctbox[guessCount].innerHTML = result[0];
-    almostbox[guessCount].innerHTML = result[1];  
+    almostbox[guessCount].innerHTML = result[1];
   }
   else {
-  const result = checkNumber(guess, NUM_ANSWER);
-  correctbox[guessCount].innerHTML = result[0];
-  almostbox[guessCount].innerHTML = result[1];
-  guessCount != 9 ? guessCount++ : null;
-  currentCharIdx = 0;
+    const result = checkNumber(guess, NUM_ANSWER);
+    correctbox[guessCount].innerHTML = result[0];
+    almostbox[guessCount].innerHTML = result[1];
+    guessCount != 9 ? guessCount++ : null;
+    currentCharIdx = 0;
 
-  if (guessCount == 9) {
-    messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
+    if (guessCount == 9) {
+      storage_key = "fail";
+      cnt = parseInt(localStorage.getItem(storage_key));
+      localStorage.setItem(storage_key, (cnt + 1).toString());
+      messege.innerHTML = `<p class="bg-black border border-green-600 w-80 rounded text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-center messeges p-5 shadow">
                 You lost :( <br/>
                 <span class="text-white">The secret number is: <b>${num}</b><span/><br/>
-                <button onclick="resetAll()" class='restar  bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
+                <button onclick=location.reload() class='restar  bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer'>Play again</button>
                 </p>`;
+    }
   }
-}
 }
 
 function resetAll(num = 1111) {
@@ -144,7 +151,7 @@ function resetAll(num = 1111) {
     }
   }
   messege.innerHTML = "";
-  
+
 }
 
 // Event handlers
@@ -160,11 +167,22 @@ function handleKeyPress(e) {
     removeLetter();
   }
   else if (e.key == "Restart") {
-    // charArray = ["", "", "", ""];
-    // currentCharIdx = 0;
-    // guessCount = 0;
-    // location.reload();
-    resetAll(num=NUM_ANSWER);
+    resetAll(num = NUM_ANSWER);
+  }
+  else if (e.key == "Forget") {
+    localStorage.setItem("1", "0");
+    localStorage.setItem("2", "0");
+    localStorage.setItem("3", "0");
+    localStorage.setItem("4", "0");
+    localStorage.setItem("5", "0");
+    localStorage.setItem("6", "0");
+    localStorage.setItem("7", "0");
+    localStorage.setItem("8", "0");
+    localStorage.setItem("9", "0");
+    localStorage.setItem("fail", "0");
+    localStorage.removeItem("visited");
+    resetAll();
+    location.reload();
   }
 }
 
@@ -183,7 +201,12 @@ function virtualToKeyCode(e) {
     return {
       keyCode: 13,
       key: "Restart",
-    }
+    };
+  } else if (e.target.id == "forget") {
+    return {
+      keyCode: 14,
+      key: "Forget",
+    };
   }
   else {
     return {
@@ -193,26 +216,9 @@ function virtualToKeyCode(e) {
   }
 }
 
-// virtual keyabord
-window.addEventListener("keydown", (e) => {
-  handleKeyPress(e);
-});
-// Virtual: first row
-virtualKeyboard.children[0].addEventListener("click", (e) => {
-  handleKeyPress(virtualToKeyCode(e));
-});
-// Virtual: second row
-virtualKeyboard.children[1].addEventListener("click", (e) => {
-  handleKeyPress(virtualToKeyCode(e));
-});
-
-window.addEventListener("load", function(){
-  displayPopup();
-});
-
 function displayPopup(e) {
-
-  messege.innerHTML = `
+  if (!localStorage.getItem("visited")) {
+    messege.innerHTML = `
       <p class="bg-white border border-green-600 w-80 rounded text-black absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg text-left messeges p-5 shadow">
       <b>How To Play</b>  <br/>
       Guess the number in 9 tries <br/>
@@ -230,4 +236,70 @@ function displayPopup(e) {
       Also, the guess doesn't have to have distinct digits <br/>
       <button  onclick="resetAll()" class='bg-white text-green-600 hover:text-green-800 hover:bg-gray-200 py-2 px-2 m-0.5 rounded w-50 cursor-pointer play-button'>Let's play!</button>
       </p>`;
+  }
+  localStorage.setItem("visited", "true");
 }
+
+// virtual keyabord
+window.addEventListener("keydown", (e) => {
+  handleKeyPress(e);
+});
+// Virtual: first row
+virtualKeyboard.children[0].addEventListener("click", (e) => {
+  handleKeyPress(virtualToKeyCode(e));
+});
+// Virtual: second row
+virtualKeyboard.children[1].addEventListener("click", (e) => {
+  handleKeyPress(virtualToKeyCode(e));
+});
+
+window.addEventListener("load", function () {
+  showing_popup = true;
+  displayPopup();
+});
+
+window.addEventListener("click", function () {
+  if (showing_popup) {
+    showing_popup = false;
+    resetAll();
+  }
+});
+
+if (!localStorage.getItem("1")) {
+  localStorage.setItem("1", "0");
+  localStorage.setItem("2", "0");
+  localStorage.setItem("3", "0");
+  localStorage.setItem("4", "0");
+  localStorage.setItem("5", "0");
+  localStorage.setItem("6", "0");
+  localStorage.setItem("7", "0");
+  localStorage.setItem("8", "0");
+  localStorage.setItem("9", "0");
+  localStorage.setItem("fail", "0");
+}
+
+JSC.Chart('chartDiv', {
+  type: 'vertical column',
+  legend_visible: false,
+  yAxis_visible: false,
+  xAxis_label_text: "# of attempts",
+  yAxis_label_text: "count",
+  series: [
+    {
+      name: "games",
+      palette: "bright",
+      points: [
+        { x: '1', y: parseInt(localStorage.getItem('1')) },
+        { x: '2', y: parseInt(localStorage.getItem('2')) },
+        { x: '3', y: parseInt(localStorage.getItem('3')) },
+        { x: '4', y: parseInt(localStorage.getItem('4')) },
+        { x: '5', y: parseInt(localStorage.getItem('5')) },
+        { x: '6', y: parseInt(localStorage.getItem('6')) },
+        { x: '7', y: parseInt(localStorage.getItem('7')) },
+        { x: '8', y: parseInt(localStorage.getItem('8')) },
+        { x: '9', y: parseInt(localStorage.getItem('9')) },
+        { x: 'fail', y: parseInt(localStorage.getItem('fail')) },
+      ]
+    }
+  ]
+});
