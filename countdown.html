@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- created with ChatGPT o1 preview -->
+  <meta charset="UTF-8">
+  <title>Countdown Game</title>
+  <link rel="stylesheet" href="css/countdown_style.css">
+  <style>
+  </style>
+</head>
+
+<body>
+
+  <h1>Countdown Game</h1>
+  <div id="setup">
+    <label for="num-players">Number of Players (2-10):</label>
+    <input type="number" id="num-players" min="2" max="10" value="2">
+    <button id="start-game">Start Game</button>
+  </div>
+
+  <div id="game" style="display:none;">
+    <h2>Round: <span id="round-number">1</span> of 5</h2>
+    <div id="scores"></div>
+    <div id="countdown">10.0</div>
+    <div id="player-buttons"></div>
+    <div id="message"></div>
+    <button id="new-game" style="display:none;">New Game</button>
+  </div>
+  <!-- Rules Modal -->
+
+
+  <div id="rules-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="rules-title">
+    <div class="modal-content">
+      <h2 id="rules-title">How to Play</h2>
+      <p>
+        Welcome to the Countdown Game!
+      </p>
+      <p>
+        <strong>Objective:</strong> Be the player who clicks their button closest to when the countdown reaches zero
+        without going over.
+      </p>
+      <p>
+        <strong>Rules:</strong>
+      <ul>
+        <li>Choose the number of players (2 to 10) and start the game.</li>
+        <li>A countdown timer will start and will disappear before reaching zero.</li>
+        <li>Press your player button as close as possible to when you think the timer reaches zero.</li>
+        <li>If you press after the timer reaches zero, you lose the round.</li>
+        <li>If only one player presses before time is up, they win the round by default.</li>
+        <li>Unpressed buttons will "explode" if not pressed before time runs out.</li>
+        <li>The game is played as a best of 5 rounds. The first player to win 3 rounds wins the game.</li>
+      </ul>
+      </p>
+      <button id="close-modal">Got It!</button>
+      <p>
+        <label><input type="checkbox" id="dont-show-again"> Don't show this again</label>
+      </p>
+
+    </div>
+  </div>
+
+  <script src="js/countdown_script.js"></script>
+  <script>
+    // JavaScript goes here
+  </script>
+
+</body>
+
+</html>

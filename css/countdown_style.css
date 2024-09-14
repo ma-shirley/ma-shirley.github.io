@@ -1,0 +1,165 @@
+/* created with ChatGPT o1 preview */
+/* Base Styles */
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none; /* Disable text selection on touch devices */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#setup, #game {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-top: 20px;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+#countdown {
+  font-size: 6em;
+  margin: 20px 0;
+}
+
+#player-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  font-size: 1.2em;
+  padding: 15px;
+  margin: 10px;
+  flex: 1 1 45%; /* Two buttons per row */
+  max-width: 200px;
+  transition: background-color 0.2s;
+}
+
+button:active {
+  background-color: #ccc;
+}
+
+#message {
+  font-size: 1.2em;
+  margin-top: 20px;
+  min-height: 30px;
+}
+
+#scores {
+  font-size: 1em;
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#scores span {
+  margin: 5px 15px;
+}
+
+#new-game {
+  font-size: 1.2em;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+/* Explosion Animation */
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.explode {
+  animation: explode 1s forwards;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  #countdown {
+    font-size: 5em;
+  }
+
+  button {
+    flex: 1 1 100%; /* One button per row */
+    max-width: none;
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
+
+  #scores {
+    font-size: 1.2em;
+  }
+
+  #message {
+    font-size: 1.1em;
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* Center vertically */
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 600px;
+  text-align: left;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-content p, .modal-content ul {
+  font-size: 1.1em;
+}
+
+.modal-content ul {
+  padding-left: 20px;
+}
+
+.modal-content button {
+  display: block;
+  margin: 20px auto 0;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  cursor: pointer;
+}
