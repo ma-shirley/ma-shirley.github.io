@@ -185,7 +185,7 @@ function updateCountdown() {
 
 function playerClick(player) {
   if (!gameActive) return;
-
+  if (player.button.disabled) return;
   let currentTime = countdownTime;
 
   // Disallow clicks after time has run out
