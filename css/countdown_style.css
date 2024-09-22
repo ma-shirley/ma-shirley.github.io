@@ -31,13 +31,6 @@ h2 {
   margin: 20px 0;
 }
 
-#player-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
 button {
   font-size: 1.2em;
   padding: 15px;
@@ -45,6 +38,14 @@ button {
   flex: 1 1 45%; /* Two buttons per row */
   max-width: 200px;
   transition: background-color 0.2s;
+}
+
+.player-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+  touch-action: none; /* Disable browser's default touch handling */
 }
 
 button:active {

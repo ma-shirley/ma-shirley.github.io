@@ -1,4 +1,14 @@
 // created with ChatGPT o1 preview
+document.addEventListener('touchstart', function(event) {
+  if (event.touches.length > 1) {
+    // If there are multiple touches, allow each one to be processed
+    for (let i = 0; i < event.touches.length; i++) {
+      let touch = event.touches[i];
+      // Process each touch separately (depends on the game logic)
+    }
+  }
+}, { passive: false });
+
 // Initialize variables
 let countdownElement = document.getElementById('countdown');
 let messageElement = document.getElementById('message');
@@ -34,7 +44,7 @@ newGameButton.addEventListener('click', () => {
 function setupGame() {
   numPlayers = parseInt(numPlayersInput.value);
 
-  if (numPlayers < 2 || numPlayers > 10) {
+  if (!Number.isInteger(numPlayersInput.value)&& numPlayers < 2 || numPlayers > 10) {
     alert('Please enter a number of players between 2 and 10.');
     return;
   }
@@ -70,12 +80,15 @@ function initializePlayers() {
 
     // Create button element
     let button = document.createElement('button');
+    button.className = 'player-buttons'
     button.id = `player${i}`;
     button.textContent = player.name;
     button.style.fontSize = '24px';
     button.style.padding = '10px 20px';
     button.style.margin = '10px';
-    button.addEventListener('click', () => playerClick(player));
+    
+    // Use pointerdown instead of click
+    button.addEventListener('pointerdown', () => playerClick(player));
 
     // Assign button to player object
     player.button = button;
@@ -157,7 +170,7 @@ function updateCountdown() {
   // Hide the countdown at the hideTime
   if (countdownTime <= hideTime && countdownVisible) {
     countdownVisible = false;
-        // Reset players
+    // Reset players
     players.forEach(player => {
         player.button.disabled = false;
     });
@@ -185,7 +198,6 @@ function playerClick(player) {
   if (player.time === null) {
     player.time = currentTime;
     player.button.disabled = true;
-    console.log(player.id)
   }
 
   // Check if all players have clicked
@@ -286,7 +298,7 @@ function endGame(gameWon = false) {
       // No players pressed the button
       messageElement.textContent += ' No one wins this round.';
     }
-
+    updateScores();
     // Proceed to next round after a short delay
     setTimeout(() => {
       roundNumber++;
